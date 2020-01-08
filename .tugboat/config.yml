@@ -12,8 +12,8 @@ services:
     #   3. Routes requests to the preview URL to this service
     default: true
     
-    # Wait until the mysql service is done building
-    depends: mysql
+    # Wait until the mariadb service is done building
+    depends: mariadb
     
     # A set of commands to run while building this service
     commands:
@@ -41,7 +41,7 @@ services:
         # from Tugboat on the Repository Settings page. You must set 
         # this up ahead of time. See the screenshot in this repos to know 
         # what it looks like. 
-        - drush -r "${DOCROOT}" site-install --db-url="mysql://tugboat:tugboat@mysql/tugboat" -y
+        - drush -r "${DOCROOT}" site-install --db-url="mysql://tugboat:tugboat@mariadb/tugboat" -y
         - drush -r "${DOCROOT}" user-password admin --password="${ADMIN_PWD}"
         
         # Setup the necessary file permissions. 
@@ -59,7 +59,7 @@ services:
   
   # What to call the service hosting MySQL. This name also acts as the
   # hostname to access the service by from the php service.
-  mysql:
+  mariadb:
   
-    # Use the latest available 5.x version of MySQL
-    image: tugboatqa/mysql:5
+    # Use the 10.1 version of MariaDB
+    image: tugboatqa/mariadb:10.1
